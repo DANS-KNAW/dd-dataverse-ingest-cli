@@ -13,15 +13,19 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-
 package nl.knaw.dans.dvingestcli.config;
 
-import io.dropwizard.core.Configuration;
+import io.dropwizard.client.JerseyClientConfiguration;
 import lombok.Data;
-import lombok.EqualsAndHashCode;
+
+import javax.validation.constraints.NotNull;
+import java.net.URI;
 
 @Data
-@EqualsAndHashCode(callSuper = true)
-public class DdDataverseIngestCliConfig extends Configuration {
-    private DataverseIngestConfig dataverseIngest;
+public class DataverseIngestConfig {
+    @NotNull
+    private URI url;
+
+    @NotNull
+    private JerseyClientConfiguration httpClient;
 }

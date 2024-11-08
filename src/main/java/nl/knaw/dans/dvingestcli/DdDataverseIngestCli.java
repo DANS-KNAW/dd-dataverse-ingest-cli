@@ -16,11 +16,15 @@
 
 package nl.knaw.dans.dvingestcli;
 
+import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
-import nl.knaw.dans.lib.util.AbstractCommandLineApp;
-import nl.knaw.dans.lib.util.PicocliVersionProvider;
+import nl.knaw.dans.dvingest.client.ApiClient;
+import nl.knaw.dans.dvingest.client.DefaultApi;
+import nl.knaw.dans.dvingestcli.command.StartImport;
 import nl.knaw.dans.dvingestcli.config.DdDataverseIngestCliConfig;
-import picocli.AutoComplete.GenerateCompletion;
+import nl.knaw.dans.lib.util.AbstractCommandLineApp;
+import nl.knaw.dans.lib.util.ClientProxyBuilder;
+import nl.knaw.dans.lib.util.PicocliVersionProvider;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 
@@ -40,8 +44,14 @@ public class DdDataverseIngestCli extends AbstractCommandLineApp<DdDataverseInge
 
     @Override
     public void configureCommandLine(CommandLine commandLine, DdDataverseIngestCliConfig config) {
-        // TODO: set up the API client, if applicable
+        var objectMapper = new ObjectMapper();
+        DefaultApi api = new ClientProxyBuilder<ApiClient, DefaultApi>()
+            .apiClient(new ApiClient())
+            .defaultApiCtor(DefaultApi::new)
+            .httpClient(config.getDataverseIngest().getHttpClient())
+            .basePath(config.getDataverseIngest().getUrl()).build();
+
         log.debug("Configuring command line");
-        // TODO: add options and subcommands
+        commandLine.addSubcommand(new StartImport(api, objectMapper));
     }
 }
