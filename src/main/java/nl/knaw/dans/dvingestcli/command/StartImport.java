@@ -25,6 +25,8 @@ import nl.knaw.dans.dvingest.client.DefaultApi;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
 
+import java.io.IOException;
+import java.nio.file.Path;
 import java.util.concurrent.Callable;
 
 @Command(name = "start-import",
@@ -39,23 +41,25 @@ public class StartImport implements Callable<Integer> {
     private final ObjectMapper objectMapper;
 
     @Parameters(index = "0", paramLabel = "path", description = "The path to the file to import")
-    private String path;
+    private Path path;
 
     @Override
     public Integer call() {
         try {
+            var canonicalPath = path.toRealPath().toString();
             var status = api.ingestPost(
                 new ImportCommandDto()
-                    .path(path)
+                    .path(canonicalPath)
                     .singleObject(true));
             System.out.println("Import started: " + objectMapper.writeValueAsString(status));
         }
-        catch (ApiException e) {
-            System.err.println("Error starting import: " + e.getMessage());
-            return 1;
-        }
         catch (JsonProcessingException e) {
             System.err.println("Status report could not be parsed: " + e.getMessage());
+            return 1;
+        }
+        catch (ApiException | IOException e) {
+            System.err.println("Error starting import: " + e.getMessage());
+            e.printStackTrace();
             return 1;
         }
         return 0;
