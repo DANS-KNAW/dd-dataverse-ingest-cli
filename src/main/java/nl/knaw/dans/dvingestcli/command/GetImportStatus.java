@@ -15,58 +15,40 @@
  */
 package nl.knaw.dans.dvingestcli.command;
 
-import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import nl.knaw.dans.dvingest.api.ImportCommandDto;
-import nl.knaw.dans.dvingest.client.ApiException;
 import nl.knaw.dans.dvingest.client.DefaultApi;
 import picocli.CommandLine.Command;
-import picocli.CommandLine.Option;
 import picocli.CommandLine.Parameters;
 
-import java.io.IOException;
-import java.nio.file.Path;
 import java.util.concurrent.Callable;
 
-@Command(name = "start-import",
-         mixinStandardHelpOptions = true,
-         description = "Start an import job")
 @RequiredArgsConstructor
-public class StartImport implements Callable<Integer> {
+@Command(name = "get-import-status")
+public class GetImportStatus implements Callable<Integer> {
     @NonNull
     private final DefaultApi api;
 
     @NonNull
     private final ObjectMapper objectMapper;
 
-    @Parameters(index = "0", paramLabel = "path", description = "The path to the file to import")
-    private Path path;
-
-    @Option(names = { "-s", "--single-object" }, description = "Import as single object")
-    private boolean singleObject;
+    @Parameters(index = "0", paramLabel = "location", description = "The path to the import batch", arity = "0..1")
+    private String location;
 
     @Override
     public Integer call() {
         try {
-            var canonicalPath = path.toRealPath().toString();
-            var status = api.ingestPost(
-                new ImportCommandDto()
-                    .path(canonicalPath)
-                    .singleObject(singleObject));
+            var status = api.ingestGet(location);
             System.out.println(objectMapper.writeValueAsString(status));
-            System.err.println("Import started: " + canonicalPath);
+            System.err.println("Import status retrieved: " + location);
         }
-        catch (JsonProcessingException e) {
-            System.err.println("Status report could not be parsed: " + e.getMessage());
-            return 1;
-        }
-        catch (ApiException | IOException e) {
-            System.err.println("Error starting import: " + e.getMessage());
+        catch (Exception e) {
+            System.err.println("Error getting import status: " + e.getMessage());
             e.printStackTrace();
             return 1;
         }
         return 0;
     }
+
 }
