@@ -1,6 +1,6 @@
 dataverseIngest:
   url: "http://localhost:20360"
-  httpCient:
+  httpClient:
     connectTimeout: 15s
     readTimeout: 60s
 
