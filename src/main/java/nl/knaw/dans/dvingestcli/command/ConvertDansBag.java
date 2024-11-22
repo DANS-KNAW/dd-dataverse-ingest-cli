@@ -19,7 +19,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import nl.knaw.dans.dvingest.api.ImportCommandDto;
+import nl.knaw.dans.dvingest.api.ConvertDansBagCommandDto;
 import nl.knaw.dans.dvingest.client.ApiException;
 import nl.knaw.dans.dvingest.client.DefaultApi;
 import picocli.CommandLine.Command;
@@ -30,33 +30,32 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.concurrent.Callable;
 
-@Command(name = "start-import",
+@Command(name = "convert-dans-bag",
          mixinStandardHelpOptions = true,
-         description = "Start an import job")
+         description = "Converts one or more deposits containing DANS bags to ones that contain Dataverse ingest bags")
 @RequiredArgsConstructor
-public class StartImport implements Callable<Integer> {
+public class ConvertDansBag implements Callable<Integer> {
     @NonNull
     private final DefaultApi api;
 
     @NonNull
     private final ObjectMapper objectMapper;
 
-    @Parameters(index = "0", paramLabel = "path", description = "The path to the deposit or batch to import")
+    @Parameters(index = "0", paramLabel = "path", description = "The path to the deposit or batch to convert")
     private Path path;
 
-    @Option(names = { "-s", "--single-deposit" }, description = "Import as single deposit")
-    private boolean singleDeposit;
+    @Option(names = { "-s", "--single-deposit" }, description = "Convert as single deposit")
+    private boolean singleObject;
 
     @Override
     public Integer call() {
         try {
             var canonicalPath = path.toRealPath().toString();
-            var status = api.ingestPost(
-                new ImportCommandDto()
+            var status = api.convertDansBagPost(
+                new ConvertDansBagCommandDto()
                     .path(canonicalPath)
-                    .singleObject(singleDeposit));
+                    .singleObject(singleObject));
             System.out.println(objectMapper.writeValueAsString(status));
-            System.err.println("Import started: " + canonicalPath);
         }
         catch (JsonProcessingException e) {
             System.err.println("Status report could not be parsed: " + e.getMessage());
