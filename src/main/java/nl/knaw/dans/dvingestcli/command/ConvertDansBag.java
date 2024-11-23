@@ -19,7 +19,7 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
-import nl.knaw.dans.dvingest.api.ConvertDansBagCommandDto;
+import nl.knaw.dans.dvingest.api.ImportCommandDto;
 import nl.knaw.dans.dvingest.client.ApiException;
 import nl.knaw.dans.dvingest.client.DefaultApi;
 import picocli.CommandLine.Command;
@@ -51,10 +51,12 @@ public class ConvertDansBag implements Callable<Integer> {
     public Integer call() {
         try {
             var canonicalPath = path.toRealPath().toString();
-            var status = api.convertDansBagPost(
-                new ConvertDansBagCommandDto()
+            var status = api.ingestPost(
+                new ImportCommandDto()
                     .path(canonicalPath)
-                    .singleObject(singleObject));
+                    .singleObject(singleObject)
+                    .onlyConvertDansBag(true)
+            );
             System.out.println(objectMapper.writeValueAsString(status));
         }
         catch (JsonProcessingException e) {
