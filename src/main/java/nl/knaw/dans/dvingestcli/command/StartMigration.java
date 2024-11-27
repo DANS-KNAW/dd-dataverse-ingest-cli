@@ -30,11 +30,11 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.concurrent.Callable;
 
-@Command(name = "start-import",
+@Command(name = "start-migration",
          mixinStandardHelpOptions = true,
-         description = "Start an import job")
+         description = "Start a migration job")
 @RequiredArgsConstructor
-public class StartImport implements Callable<Integer> {
+public class StartMigration implements Callable<Integer> {
     @NonNull
     private final DefaultApi api;
 
@@ -54,7 +54,7 @@ public class StartImport implements Callable<Integer> {
             var status = api.ingestPost(
                 new ImportCommandDto()
                     .path(canonicalPath)
-                    .migration(false)
+                    .migration(true)
                     .singleObject(singleDeposit));
             System.out.println(objectMapper.writeValueAsString(status));
             System.err.println("Import started: " + canonicalPath);
