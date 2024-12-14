@@ -30,11 +30,11 @@ import java.io.IOException;
 import java.nio.file.Path;
 import java.util.concurrent.Callable;
 
-@Command(name = "convert-dans-bag",
+@Command(name = "convert-dans-migration-bag",
          mixinStandardHelpOptions = true,
-         description = "Converts one or more deposits containing DANS bags to ones that contain Dataverse ingest bags")
+         description = "Converts one or more deposits containing DANS migration bags to ones that contain Dataverse ingest bags")
 @RequiredArgsConstructor
-public class ConvertDansBag implements Callable<Integer> {
+public class ConvertDansMigrationBag implements Callable<Integer> {
     @NonNull
     private final DefaultApi api;
 
@@ -56,6 +56,7 @@ public class ConvertDansBag implements Callable<Integer> {
                     .path(canonicalPath)
                     .singleObject(singleObject)
                     .onlyConvertDansBag(true)
+                    .migration(true)
             );
             System.out.println(objectMapper.writeValueAsString(status));
         }

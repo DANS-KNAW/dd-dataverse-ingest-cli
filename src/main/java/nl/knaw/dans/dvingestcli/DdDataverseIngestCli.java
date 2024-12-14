@@ -20,7 +20,8 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.extern.slf4j.Slf4j;
 import nl.knaw.dans.dvingest.client.ApiClient;
 import nl.knaw.dans.dvingest.client.DefaultApi;
-import nl.knaw.dans.dvingestcli.command.ConvertDansBag;
+import nl.knaw.dans.dvingestcli.command.ConvertDansImportBag;
+import nl.knaw.dans.dvingestcli.command.ConvertDansMigrationBag;
 import nl.knaw.dans.dvingestcli.command.GetImportStatus;
 import nl.knaw.dans.dvingestcli.command.StartImport;
 import nl.knaw.dans.dvingestcli.command.StartMigration;
@@ -58,6 +59,7 @@ public class DdDataverseIngestCli extends AbstractCommandLineApp<DdDataverseInge
         commandLine.addSubcommand(new StartImport(api, objectMapper));
         commandLine.addSubcommand(new StartMigration(api, objectMapper));
         commandLine.addSubcommand(new GetImportStatus(api, objectMapper));
-        commandLine.addSubcommand(new ConvertDansBag(api, objectMapper));
+        commandLine.addSubcommand(new ConvertDansImportBag(api, objectMapper));
+        commandLine.addSubcommand(new ConvertDansMigrationBag(api, objectMapper));
     }
 }
