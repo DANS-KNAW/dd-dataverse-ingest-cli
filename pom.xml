@@ -37,7 +37,7 @@
         <main-class>nl.knaw.dans.dvingestcli.DdDataverseIngestCli</main-class>
         <picocli.version>4.7.5</picocli.version> <!-- TODO: move to parent -->
         <command-name>ingest</command-name>
-        <dd-dataverse-ingest-api.version>0.2.0</dd-dataverse-ingest-api.version>
+        <dd-dataverse-ingest-api.version>0.2.1-SNAPSHOT</dd-dataverse-ingest-api.version>
     </properties>
 
     <scm>

@@ -23,6 +23,7 @@ import nl.knaw.dans.dvingest.client.DefaultApi;
 import nl.knaw.dans.dvingestcli.command.ConvertDansImportBag;
 import nl.knaw.dans.dvingestcli.command.ConvertDansMigrationBag;
 import nl.knaw.dans.dvingestcli.command.GetImportStatus;
+import nl.knaw.dans.dvingestcli.command.GetMigrationStatus;
 import nl.knaw.dans.dvingestcli.command.StartImport;
 import nl.knaw.dans.dvingestcli.command.StartMigration;
 import nl.knaw.dans.dvingestcli.config.DdDataverseIngestCliConfig;
@@ -59,6 +60,7 @@ public class DdDataverseIngestCli extends AbstractCommandLineApp<DdDataverseInge
         commandLine.addSubcommand(new StartImport(api, objectMapper));
         commandLine.addSubcommand(new StartMigration(api, objectMapper));
         commandLine.addSubcommand(new GetImportStatus(api, objectMapper));
+        commandLine.addSubcommand(new GetMigrationStatus(api, objectMapper));
         commandLine.addSubcommand(new ConvertDansImportBag(api, objectMapper));
         commandLine.addSubcommand(new ConvertDansMigrationBag(api, objectMapper));
     }

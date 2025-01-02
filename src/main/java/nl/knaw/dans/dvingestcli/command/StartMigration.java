@@ -47,6 +47,9 @@ public class StartMigration implements Callable<Integer> {
     @Option(names = { "-s", "--single-deposit" }, description = "Import as single deposit")
     private boolean singleDeposit;
 
+    @Option(names = { "-c", "--continue-batch" }, description = "Continue a previously started batch (will skip check for empty output directory)")
+    private boolean continueBatch;
+
     @Override
     public Integer call() {
         try {
@@ -55,7 +58,8 @@ public class StartMigration implements Callable<Integer> {
                 new ImportCommandDto()
                     .path(canonicalPath)
                     .migration(true)
-                    .singleObject(singleDeposit));
+                    .singleObject(singleDeposit)
+                    .continueBatch(continueBatch));
             System.out.println(objectMapper.writeValueAsString(status));
             System.err.println("Import started: " + canonicalPath);
         }

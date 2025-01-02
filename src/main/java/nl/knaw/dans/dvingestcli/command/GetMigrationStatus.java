@@ -25,26 +25,26 @@ import picocli.CommandLine.Parameters;
 import java.util.concurrent.Callable;
 
 @RequiredArgsConstructor
-@Command(name = "get-import-status")
-public class GetImportStatus implements Callable<Integer> {
+@Command(name = "get-migration-status")
+public class GetMigrationStatus implements Callable<Integer> {
     @NonNull
     private final DefaultApi api;
 
     @NonNull
     private final ObjectMapper objectMapper;
 
-    @Parameters(index = "0", paramLabel = "location", description = "The path to the import batch", arity = "0..1")
+    @Parameters(index = "0", paramLabel = "location", description = "The path to the migration batch", arity = "0..1")
     private String location;
 
     @Override
     public Integer call() {
         try {
-            var status = api.ingestGet(location, false);
+            var status = api.ingestGet(location, true);
             System.out.println(objectMapper.writeValueAsString(status));
-            System.err.println("Import status retrieved: " + location);
+            System.err.println("Migration status retrieved: " + location);
         }
         catch (Exception e) {
-            System.err.println("Error getting import status: " + e.getMessage());
+            System.err.println("Error getting migration status: " + e.getMessage());
             e.printStackTrace();
             return 1;
         }
