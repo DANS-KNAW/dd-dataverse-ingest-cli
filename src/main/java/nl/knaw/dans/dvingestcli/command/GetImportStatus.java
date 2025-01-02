@@ -25,7 +25,9 @@ import picocli.CommandLine.Parameters;
 import java.util.concurrent.Callable;
 
 @RequiredArgsConstructor
-@Command(name = "get-import-status")
+@Command(name = "get-import-status",
+         mixinStandardHelpOptions = true,
+         description = "Get the status of an import batch")
 public class GetImportStatus implements Callable<Integer> {
     @NonNull
     private final DefaultApi api;

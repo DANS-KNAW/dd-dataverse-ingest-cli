@@ -15,42 +15,49 @@
  */
 package nl.knaw.dans.dvingestcli.command;
 
+import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
+import nl.knaw.dans.dvingest.client.ApiException;
 import nl.knaw.dans.dvingest.client.DefaultApi;
 import picocli.CommandLine.Command;
 import picocli.CommandLine.Parameters;
 
+import java.io.IOException;
+import java.nio.file.Path;
 import java.util.concurrent.Callable;
 
-@RequiredArgsConstructor
-@Command(name = "get-migration-status",
+@Command(name = "cancel-migration",
          mixinStandardHelpOptions = true,
-         description = "Get the status of a migration batch")
-public class GetMigrationStatus implements Callable<Integer> {
+         description = "Cancel a migration job")
+@RequiredArgsConstructor
+public class CancelMigration implements Callable<Integer> {
     @NonNull
     private final DefaultApi api;
 
     @NonNull
     private final ObjectMapper objectMapper;
 
-    @Parameters(index = "0", paramLabel = "location", description = "The path to the migration batch", arity = "0..1")
-    private String location;
+    @Parameters(index = "0", paramLabel = "path", description = "The path to the deposit or batch to cancel")
+    private String path;
 
     @Override
     public Integer call() {
         try {
-            var status = api.ingestGet(location, true);
-            System.out.println(objectMapper.writeValueAsString(status));
-            System.err.println("Migration status retrieved: " + location);
+            var statuses = api.ingestCancelPost(path, true);
+            System.out.println(objectMapper.writeValueAsString(statuses));
+            System.err.println("Cancelation request sent. Running task will be completed, but no new tasks will be started.");
         }
-        catch (Exception e) {
-            System.err.println("Error getting migration status: " + e.getMessage());
+        catch (JsonProcessingException e) {
+            System.err.println("Status report could not be parsed: " + e.getMessage());
+            return 1;
+        }
+        catch (ApiException | IOException e) {
+            System.err.println("Error canceling import: " + e.getMessage());
             e.printStackTrace();
             return 1;
         }
         return 0;
     }
-
 }
