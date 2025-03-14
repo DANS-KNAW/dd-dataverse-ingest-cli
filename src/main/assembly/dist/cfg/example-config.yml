@@ -2,7 +2,7 @@ dataverseIngest:
   url: "http://localhost:20360"
   httpClient:
     connectTimeout: 15s
-    readTimeout: 60s
+    timeout: 30s
 
 
 #
