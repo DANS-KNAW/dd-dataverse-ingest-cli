@@ -41,7 +41,7 @@ public class GetImportStatus implements Callable<Integer> {
     @Override
     public Integer call() {
         try {
-            var status = api.ingestGet(location, false);
+            var status = api.ingestGet(location);
             System.out.println(objectMapper.writeValueAsString(status));
             System.err.println("Import status retrieved: " + location);
         }
