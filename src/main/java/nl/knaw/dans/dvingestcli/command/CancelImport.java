@@ -53,7 +53,7 @@ public class CancelImport implements Callable<Integer> {
             System.err.println("Status report could not be parsed: " + e.getMessage());
             return 1;
         }
-        catch (ApiException | IOException e) {
+        catch (ApiException e) {
             System.err.println("Error canceling import: " + e.getMessage());
             e.printStackTrace();
             return 1;
