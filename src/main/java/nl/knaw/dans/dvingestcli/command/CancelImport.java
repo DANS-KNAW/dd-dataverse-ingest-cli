@@ -45,7 +45,7 @@ public class CancelImport implements Callable<Integer> {
     @Override
     public Integer call() {
         try {
-            var statuses = api.ingestCancelPost(path, false);
+            var statuses = api.ingestCancelPost(path);
             System.out.println(objectMapper.writeValueAsString(statuses));
             System.err.println("Cancelation request sent. Running task will be completed, but no new tasks will be started.");
         }
@@ -53,7 +53,7 @@ public class CancelImport implements Callable<Integer> {
             System.err.println("Status report could not be parsed: " + e.getMessage());
             return 1;
         }
-        catch (ApiException | IOException e) {
+        catch (ApiException e) {
             System.err.println("Error canceling import: " + e.getMessage());
             e.printStackTrace();
             return 1;
