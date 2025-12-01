@@ -57,7 +57,6 @@ public class StartImport implements Callable<Integer> {
             var status = api.ingestPost(
                 new ImportCommandDto()
                     .path(canonicalPath)
-                    .migration(false)
                     .singleObject(singleDeposit)
                     .continueBatch(continueBatch));
             System.out.println(objectMapper.writeValueAsString(status));

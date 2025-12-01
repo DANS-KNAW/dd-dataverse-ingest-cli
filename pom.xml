@@ -22,11 +22,11 @@
     <parent>
         <groupId>nl.knaw.dans</groupId>
         <artifactId>dd-parent</artifactId>
-        <version>1.9.1-SNAPSHOT</version>
+        <version>1.10.0</version>
     </parent>
 
     <artifactId>dd-dataverse-ingest-cli</artifactId>
-    <version>0.5.1-SNAPSHOT</version>
+    <version>3.0.1-SNAPSHOT</version>
 
     <name>DD Dataverse Ingest CLI</name>
     <url>https://github.com/DANS-KNAW/dd-dataverse-ingest-cli</url>
@@ -36,6 +36,7 @@
     <properties>
         <main-class>nl.knaw.dans.dvingestcli.DdDataverseIngestCli</main-class>
         <command-name>ingest</command-name>
+        <dd-dataverse-ingest-api.version>0.4.0</dd-dataverse-ingest-api.version>
     </properties>
 
     <scm>
