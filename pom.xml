@@ -23,7 +23,6 @@
         <groupId>nl.knaw.dans</groupId>
         <artifactId>dd-parent</artifactId>
         <version>1.10.0</version>
-        <version>1.9.1-SNAPSHOT</version>
     </parent>
 
     <artifactId>dd-dataverse-ingest-cli</artifactId>
