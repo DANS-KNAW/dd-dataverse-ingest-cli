@@ -22,7 +22,7 @@
     <parent>
         <groupId>nl.knaw.dans</groupId>
         <artifactId>dd-parent</artifactId>
-        <version>1.9.0</version>
+        <version>1.10.0</version>
     </parent>
 
     <artifactId>dd-dataverse-ingest-cli</artifactId>
@@ -35,7 +35,6 @@
 
     <properties>
         <main-class>nl.knaw.dans.dvingestcli.DdDataverseIngestCli</main-class>
-        <picocli.version>4.7.5</picocli.version> <!-- TODO: move to parent -->
         <command-name>ingest</command-name>
         <dd-dataverse-ingest-api.version>0.4.0</dd-dataverse-ingest-api.version>
     </properties>
@@ -49,7 +48,6 @@
         <dependency>
             <groupId>nl.knaw.dans</groupId>
             <artifactId>dans-java-utils</artifactId>
-            <version>0.18.0</version>
         </dependency>
         <dependency>
             <groupId>nl.knaw.dans</groupId>
@@ -102,7 +100,6 @@
         <dependency>
             <groupId>javax.activation</groupId>
             <artifactId>activation</artifactId>
-            <version>1.1.1</version>
         </dependency>
         <!-- Include OpenAPI definition as depencency, so that Maven will check for release version during release process -->
         <dependency>
