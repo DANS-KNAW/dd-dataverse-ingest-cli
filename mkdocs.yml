@@ -25,11 +25,11 @@ nav:
   - Manual:
       - Introduction: index.md
       - Description: description.md
-#      - Examples: examples.md
-      - Installation: install.md
+      - Installation: installation.md
+      - Context: context.dm
   - Development:
       - Overview: dev.md
-  - Context: arch.md
+
 plugins:
   - markdownextradata
   - search
