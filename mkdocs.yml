@@ -26,7 +26,7 @@ nav:
       - Introduction: index.md
       - Description: description.md
       - Installation: installation.md
-      - Context: context.dm
+      - Context: context.md
   - Development:
       - Overview: dev.md
 

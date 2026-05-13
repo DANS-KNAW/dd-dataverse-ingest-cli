@@ -1,52 +1,21 @@
 dd-dataverse-ingest-cli
-===========
+=======================
 
-<!-- Remove this comment and extend the descriptions below -->
-
+CLI for dd-dataverse-ingest
 
 SYNOPSIS
 --------
 
-    dd-dataverse-ingest-cli { server | check }
-
+```bash
+ingest start-import [ -s | --single-deposit ] [ -c | --continue-batch ] <path>
+ingest get-import-status [ <location> ]
+ingest cancel-import <path>
+ingest convert-dans-import-bag [ -s | --single-deposit ] <path>
+```
 
 DESCRIPTION
 -----------
 
-CLI for dd-dataverse-ingest
+The `dd-dataverse-ingest-cli` is a command-line interface for the `dd-dataverse-ingest` service. It allows you to manage import jobs.
 
-
-ARGUMENTS
----------
-
-        positional arguments:
-        {server,check}         available commands
-        
-        named arguments:
-        -h, --help             show this help message and exit
-        -v, --version          show the application version and exit
-
-EXAMPLES
---------
-
-<!-- Add examples of invoking this module from the command line or via HTTP other interfaces -->
-    
-
-INSTALLATION AND CONFIGURATION
-------------------------------
-Currently this project is built as an RPM package for RHEL7/CentOS7 and later. The RPM will install the binaries to
-`/opt/dans.knaw.nl/dd-dataverse-ingest-cli` and the configuration files to `/etc/opt/dans.knaw.nl/dd-dataverse-ingest-cli`. 
-
-BUILDING FROM SOURCE
---------------------
-Prerequisites:
-
-* Java 11 or higher
-* Maven 3.3.3 or higher
-* RPM
-
-Steps:
-    
-    git clone https://github.com/DANS-KNAW/dd-dataverse-ingest-cli.git
-    cd dd-dataverse-ingest-cli 
-    mvn clean install
+Use `ingest <command> --help` for more information on a specific command.
