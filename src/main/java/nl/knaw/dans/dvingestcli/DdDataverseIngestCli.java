@@ -49,8 +49,8 @@ public class DdDataverseIngestCli extends AbstractCommandLineApp<DdDataverseInge
     public void configureCommandLine(CommandLine commandLine, DdDataverseIngestCliConfig config) {
         var objectMapper = new ObjectMapper();
         DefaultApi api = new ClientProxyBuilder<ApiClient, DefaultApi>()
-            .apiClient(new ApiClient())
-            .defaultApiCtor(DefaultApi::new)
+            .apiClientCtor(ApiClient::new)
+            .proxyCtor(DefaultApi::new)
             .httpClient(config.getDataverseIngest().getHttpClient())
             .basePath(config.getDataverseIngest().getUrl()).build();
 
