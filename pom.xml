@@ -30,7 +30,7 @@
 
     <name>DD Dataverse Ingest CLI</name>
     <description>CLI for dd-dataverse-ingest</description>
-    <url>https://github.com/DANS-KNAW/dd-dataverse-ingest-cli</url>
+    <url>https://dans-knaw.github.io/dd-dataverse-ingest-cli</url>
     <inceptionYear>2024</inceptionYear>
 
     <scm>
